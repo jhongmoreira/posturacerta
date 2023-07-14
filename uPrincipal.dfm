@@ -417,7 +417,7 @@ object Form1: TForm1
       NumbersOnly = True
       TabOrder = 0
     end
-    object CheckBox1: TCheckBox
+    object checkPop: TCheckBox
       Left = 216
       Top = 51
       Width = 169

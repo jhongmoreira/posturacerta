@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, IniFiles;
 
 type
   TForm2 = class(TForm)
@@ -14,6 +14,7 @@ type
     Label2: TLabel;
     Button1: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -22,6 +23,7 @@ type
 
 var
   Form2: TForm2;
+  ArqINI: TIniFile;
 
 implementation
 
@@ -30,6 +32,21 @@ implementation
 procedure TForm2.Button1Click(Sender: TObject);
 begin
   Form2.Close;
+end;
+
+
+procedure TForm2.FormShow(Sender: TObject);
+  var janela: string;
+begin
+  ArqINI := TIniFile.Create('./config.ini');
+  janela := ArqINI.ReadString('Config','Full','False');
+  if janela = 'True' then
+    begin
+      Form2.WindowState:=TWindowState.wsMaximized;
+    end else
+      begin
+        Form2.WindowState:=TWindowState.wsNormal;
+      end;
 end;
 
 end.

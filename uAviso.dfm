@@ -13,6 +13,7 @@ object Form2: TForm2
   Font.Style = []
   FormStyle = fsStayOnTop
   Position = poScreenCenter
+  OnShow = FormShow
   TextHeight = 15
   object Image1: TImage
     AlignWithMargins = True

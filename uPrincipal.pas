@@ -12,7 +12,7 @@ type
     grupo: TGroupBox;
     Edit1: TEdit;
     Label1: TLabel;
-    CheckBox1: TCheckBox;
+    checkPop: TCheckBox;
     Label2: TLabel;
     Button1: TButton;
     lTimer: TLabel;
@@ -35,6 +35,7 @@ var
   Form1: TForm1;
   maxtime: real;
   ArqINI: TIniFile;
+  Popup: String;
 
 implementation
 
@@ -52,6 +53,13 @@ begin
     Timer2.Enabled := False;
     Timer2.Interval := minutos;
     Timer2.Enabled := True;
+    if checkPop.Checked then
+      begin
+        ArqINI.WriteString('Config','Full','True');
+      end else
+        begin
+          ArqINI.WriteString('Config','Full','False');
+        end;
   finally
     maxtime := strtotime('00:00:00');
     ShowMessage('Informações Salvas.');
@@ -72,10 +80,21 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
   var minutos: string;
   var minutoSalvo: string;
+  var popupconfig : string;
 begin
   maxtime := strtotime('00:00:00');
   ArqINI := TIniFile.Create('./config.ini');
   minutoSalvo:= ArqINI.ReadString('Config','Time','90000');
+  popupconfig := ArqINI.ReadString('Config', 'Full', 'False');
+
+  if popupconfig = 'True' then
+    begin
+      checkPop.Checked := True;
+    end else
+      begin
+        checkPop.Checked := False;
+      end;
+
   Edit1.Text := FloatToStr(StrToFloat(minutoSalvo)/60000);
   Timer2.Interval := StrToInt(minutoSalvo);
 end;
