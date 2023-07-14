@@ -41,18 +41,12 @@ begin
   ArqINI := TIniFile.Create('./config.ini');
   janela := ArqINI.ReadString('Config','Full','False');
 
-  if ((janela<>'True') or (janela<>'False')) then
+  if (janela = 'True') then
     begin
-     janela := 'False';
+      Form2.WindowState:=TWindowState.wsMaximized;
     end else
       begin
-        if janela = 'True' then
-          begin
-            Form2.WindowState:=TWindowState.wsMaximized;
-          end else
-            begin
-              Form2.WindowState:=TWindowState.wsNormal;
-            end;
+        Form2.WindowState:=TWindowState.wsNormal;
       end;
 end;
 

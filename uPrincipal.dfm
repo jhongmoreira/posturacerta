@@ -370,6 +370,7 @@ object Form1: TForm1
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object lTimer: TLabel
     Left = 0
@@ -820,6 +821,15 @@ object Form1: TForm1
     object Encerrar1: TMenuItem
       Caption = 'Encerrar '
       OnClick = Encerrar1Click
+    end
+  end
+  object PopupMenu2: TPopupMenu
+    Left = 312
+    Top = 112
+    object este1: TMenuItem
+      Caption = 'Teste'
+      ShortCut = 49236
+      OnClick = este1Click
     end
   end
 end

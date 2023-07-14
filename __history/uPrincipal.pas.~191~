@@ -23,8 +23,9 @@ type
     Abrir1: TMenuItem;
     Abrir2: TMenuItem;
     Encerrar1: TMenuItem;
+    PopupMenu2: TPopupMenu;
+    este1: TMenuItem;
     procedure Timer1Timer(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -32,6 +33,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Abrir1Click(Sender: TObject);
     procedure Encerrar1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure este1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,6 +47,7 @@ var
   maxtime: real;
   ArqINI: TIniFile;
   Popup: String;
+  erro: boolean = false;
 
 implementation
 
@@ -59,12 +64,13 @@ procedure TForm1.Button1Click(Sender: TObject);
   var minutos: integer;
 begin
 
-    if (StrToInt(Edit1.Text) > 120) then
+    if (StrToInt(Edit1.Text)>120 or StrToInt(Edit1.Text<1)) then
       begin
-        raise Exception.Create('O valor máximo aceito é de 120 minutos (2 horas).');
+        raise Exception.Create('O intervalo deve estar entre 1 e 120 minutos.');
       end else
         begin
             try
+
             minutos := StrToInt(Edit1.Text)*60000;
 
             ArqINI := TIniFile.Create('./config.ini');
@@ -73,7 +79,7 @@ begin
             Timer2.Interval := minutos;
             Timer2.Enabled := True;
 
-            if checkPop.Checked then
+            if (checkPop.Checked = True) then
               begin
                 ArqINI.WriteString('Config','Full','True');
               end else
@@ -99,6 +105,11 @@ begin
   Application.Terminate;
 end;
 
+procedure TForm1.este1Click(Sender: TObject);
+begin
+  Form2.Show;
+end;
+
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Form1.Visible:=False;
@@ -106,26 +117,37 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+begin
+ maxtime := strtotime('00:00:00');
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
   var minutos: string;
   var minutoSalvo: string;
   var popupconfig : string;
-  var erro : boolean;
-begin
-  erro := false;
-  maxtime := strtotime('00:00:00');
+  var valor: integer;
+begin 
   ArqINI := TIniFile.Create('./config.ini');
   minutoSalvo:= ArqINI.ReadString('Config','Time','90000');
   popupconfig := ArqINI.ReadString('Config', 'Full', 'False');
 
+  
+  if not (TrystrToInt(minutoSalvo, valor)) then
+    begin
+         minutoSalvo := '1800000';
+         erro:= True;
+         ShowMessage('O arquivo config.ini está corrompido. Os valores padrões serão aplicados.');
+    end;   
+  
+
+
   if (StrToInt(minutoSalvo)>7200000) then
     begin
-      erro := True;
       minutoSalvo := IntToStr(1800000);
     end else
       begin
-        if ((popupconfig<>'True') or (popupconfig<>'False')) then
+        if ((popupconfig<>'True') and (popupconfig<>'False')) then
           begin
-            erro := True;
             popupconfig := 'False';
           end;
       end;
@@ -152,9 +174,13 @@ end;
 
 procedure TForm1.Timer2Timer(Sender: TObject);
 begin
-  TrayIcon1.ShowBalloonHint;
-  maxtime := strtotime('00:00:00');
-  Form2.Show;
+
+ if not (erro) then
+  begin
+    TrayIcon1.ShowBalloonHint;
+    maxtime := strtotime('00:00:00');
+    Form2.Show;    
+  end;
 end;
 
 procedure TForm1.TrayIcon1DblClick(Sender: TObject);

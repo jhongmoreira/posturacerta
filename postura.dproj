@@ -90,6 +90,7 @@
         <Icon_MainIcon>postura_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>D:\Downloads\human-backbone.ico</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>D:\Downloads\human-backbone.ico</UWP_DelphiLogo150>
+        <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>

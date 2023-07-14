@@ -1048,8 +1048,8 @@ object Form2: TForm2
   object Label2: TLabel
     Left = 32
     Top = 144
-    Width = 458
-    Height = 50
+    Width = 450
+    Height = 25
     Caption = 'Lembre-se de fazer breve alongamento a cada 1 hora'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
