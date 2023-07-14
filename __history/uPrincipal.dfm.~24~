@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  FormStyle = fsStayOnTop
   Icon.Data = {
     0000010001000000000001002000012C00001600000089504E470D0A1A0A0000
     000D49484452000001000000010008060000005C72A86600002BC84944415478
@@ -367,8 +368,8 @@ object Form1: TForm1
     E5366BDC624845CC44205243E5688C8015262EF1FC9D9624B1991652ED8098BA
     F2FF019A30E594A7C56F510000000049454E44AE426082}
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
-  OnShow = FormShow
   TextHeight = 15
   object lTimer: TLabel
     Left = 0
@@ -415,7 +416,7 @@ object Form1: TForm1
       NumbersOnly = True
       TabOrder = 0
     end
-    object CheckBox1: TCheckBox
+    object checkPop: TCheckBox
       Left = 216
       Top = 51
       Width = 169
@@ -435,6 +436,7 @@ object Form1: TForm1
   end
   object TrayIcon1: TTrayIcon
     Hint = 'Postura Certa v2'
+    BalloonHint = 'Fa'#231'a um breve alongamento e verifique sua postura. '
     BalloonTitle = 'Postura Certa'
     BalloonFlags = bfInfo
     Icon.Data = {
@@ -792,6 +794,7 @@ object Form1: TForm1
       E5366BDC624845CC44205243E5688C8015262EF1FC9D9624B1991652ED8098BA
       F2FF019A30E594A7C56F510000000049454E44AE426082}
     Visible = True
+    OnDblClick = TrayIcon1DblClick
     Left = 400
   end
   object Timer1: TTimer
@@ -799,7 +802,23 @@ object Form1: TForm1
     Left = 344
   end
   object Timer2: TTimer
+    OnTimer = Timer2Timer
     Left = 392
     Top = 152
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 8
+    Top = 160
+    object Abrir1: TMenuItem
+      Caption = 'Abrir'
+      OnClick = Abrir1Click
+    end
+    object Abrir2: TMenuItem
+      Caption = '-'
+    end
+    object Encerrar1: TMenuItem
+      Caption = 'Encerrar '
+      OnClick = Encerrar1Click
+    end
   end
 end

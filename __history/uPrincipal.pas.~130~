@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, IniFiles;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, IniFiles,
+  Vcl.Menus;
 
 type
   TForm1 = class(TForm)
@@ -18,6 +19,10 @@ type
     lTimer: TLabel;
     Timer1: TTimer;
     Timer2: TTimer;
+    PopupMenu1: TPopupMenu;
+    Abrir1: TMenuItem;
+    Abrir2: TMenuItem;
+    Encerrar1: TMenuItem;
     procedure Timer1Timer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -25,6 +30,8 @@ type
     procedure Button2Click(Sender: TObject);
     procedure TrayIcon1DblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Abrir1Click(Sender: TObject);
+    procedure Encerrar1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,32 +50,53 @@ implementation
 
 uses uAviso;
 
+procedure TForm1.Abrir1Click(Sender: TObject);
+begin
+  Form1.Visible := True;
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
   var minutos: integer;
 begin
-  try
-    minutos := StrToInt(Edit1.Text)*60000;
-    ArqINI := TIniFile.Create('./config.ini');
-    ArqINI.WriteString('Config','Time',IntToStr(minutos));
-    Timer2.Enabled := False;
-    Timer2.Interval := minutos;
-    Timer2.Enabled := True;
-    if checkPop.Checked then
+
+    if (StrToInt(Edit1.Text) > 120) then
       begin
-        ArqINI.WriteString('Config','Full','True');
+        raise Exception.Create('O valor máximo aceito é de 120 minutos (2 horas).');
       end else
         begin
-          ArqINI.WriteString('Config','Full','False');
+            try
+            minutos := StrToInt(Edit1.Text)*60000;
+
+            ArqINI := TIniFile.Create('./config.ini');
+            ArqINI.WriteString('Config','Time',IntToStr(minutos));
+            Timer2.Enabled := False;
+            Timer2.Interval := minutos;
+            Timer2.Enabled := True;
+
+            if checkPop.Checked then
+              begin
+                ArqINI.WriteString('Config','Full','True');
+              end else
+                begin
+                  ArqINI.WriteString('Config','Full','False');
+                end;
+            finally
+              maxtime := strtotime('00:00:00');
+              ShowMessage('Informações Salvas.');
+            end;
         end;
-  finally
-    maxtime := strtotime('00:00:00');
-    ShowMessage('Informações Salvas.');
-  end;
+
+
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   TrayIcon1.ShowBalloonHint;
+end;
+
+procedure TForm1.Encerrar1Click(Sender: TObject);
+begin
+  Application.Terminate;
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -82,11 +110,32 @@ procedure TForm1.FormCreate(Sender: TObject);
   var minutoSalvo: string;
   var popupconfig : string;
 begin
+  erro := false;
   maxtime := strtotime('00:00:00');
   ArqINI := TIniFile.Create('./config.ini');
   minutoSalvo:= ArqINI.ReadString('Config','Time','90000');
-  Edit1.Text := FloatToStr(StrToFloat(minutoSalvo)/60000);
-  Timer2.Interval := StrToInt(minutoSalvo);
+  popupconfig := ArqINI.ReadString('Config', 'Full', 'False');
+
+  if (StrToInt(minutoSalvo)>7200000) then
+    begin
+      minutoSalvo := IntToStr(1800000);
+    end else
+      begin
+        if ((popupconfig<>'True') or (popupconfig<>'False')) then
+          begin
+            popupconfig := 'False';
+          end;
+      end;
+
+        if (popupconfig = 'True') then
+          begin
+            checkPop.Checked := True;
+          end else
+            begin
+              checkPop.Checked := False;
+            end;
+          Edit1.Text := FloatToStr(StrToFloat(minutoSalvo)/60000);
+          Timer2.Interval := StrToInt(minutoSalvo);
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);

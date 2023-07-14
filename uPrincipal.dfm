@@ -385,8 +385,7 @@ object Form1: TForm1
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 8
-    ExplicitTop = 150
+    ExplicitWidth = 238
   end
   object grupo: TGroupBox
     Left = 8
@@ -794,6 +793,7 @@ object Form1: TForm1
       DC338D00A8305947A08454082C2740C51D47A26609559AE6E95598485AB7F9D8
       E5366BDC624845CC44205243E5688C8015262EF1FC9D9624B1991652ED8098BA
       F2FF019A30E594A7C56F510000000049454E44AE426082}
+    PopupMenu = PopupMenu1
     Visible = True
     OnDblClick = TrayIcon1DblClick
     Left = 400
@@ -806,5 +806,20 @@ object Form1: TForm1
     OnTimer = Timer2Timer
     Left = 392
     Top = 152
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 24
+    Top = 152
+    object Abrir1: TMenuItem
+      Caption = 'Abrir'
+      OnClick = Abrir1Click
+    end
+    object Abrir2: TMenuItem
+      Caption = '-'
+    end
+    object Encerrar1: TMenuItem
+      Caption = 'Encerrar '
+      OnClick = Encerrar1Click
+    end
   end
 end

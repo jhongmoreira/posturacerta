@@ -2,11 +2,11 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2023/07/14 08:08:00.000.271,=C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2023/07/14 08:08:22.000.366,C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\PosturaCerta\uPrincipal.dfm</Transaction>
-    <Transaction>2023/07/14 08:08:22.000.366,C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\PosturaCerta\uPrincipal.pas</Transaction>
-    <Transaction>2023/07/14 08:08:25.000.539,C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\PosturaCerta\postura.dproj</Transaction>
+    <Transaction>2023/07/14 08:08:22.000.366,D:\PosturaCerta\uPrincipal.dfm=C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2023/07/14 08:08:22.000.366,D:\PosturaCerta\uPrincipal.pas=C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/07/14 08:08:25.000.539,D:\PosturaCerta\postura.dproj=C:\Users\Particular\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2023/07/14 08:37:19.000.616,=D:\PosturaCerta\Unit2.pas</Transaction>
-    <Transaction>2023/07/14 08:37:24.000.232,D:\PosturaCerta\Unit2.dfm=D:\PosturaCerta\uAviso.dfm</Transaction>
-    <Transaction>2023/07/14 08:37:24.000.232,D:\PosturaCerta\Unit2.pas=D:\PosturaCerta\uAviso.pas</Transaction>
+    <Transaction>2023/07/14 08:37:24.000.232,D:\PosturaCerta\uAviso.dfm=D:\PosturaCerta\Unit2.dfm</Transaction>
+    <Transaction>2023/07/14 08:37:24.000.232,D:\PosturaCerta\uAviso.pas=D:\PosturaCerta\Unit2.pas</Transaction>
   </Transactions>
 </BorlandProject>

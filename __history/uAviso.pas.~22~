@@ -43,7 +43,11 @@ begin
   if janela = 'True' then
     begin
       Form2.WindowState:=TWindowState.wsMaximized;
-    end;
+    end else
+      begin
+        Form2.WindowState:=TWindowState.wsNormal;
+      end else
+          ShowMessage('O arquivo de configurações está corrompido. Assumindo valores padrões.');
 end;
 
 end.

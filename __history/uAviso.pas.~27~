@@ -14,7 +14,7 @@ type
     Label2: TLabel;
     Button1: TButton;
     procedure Button1Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,11 +34,26 @@ begin
   Form2.Close;
 end;
 
-procedure TForm2.FormCreate(Sender: TObject);
+
+procedure TForm2.FormShow(Sender: TObject);
   var janela: string;
 begin
   ArqINI := TIniFile.Create('./config.ini');
+  janela := ArqINI.ReadString('Config','Full','False');
 
+  if ((janela<>'True') or (janela<>'False')) then
+    begin
+      raise Exception.Create('O arquivo config.ini está corrompido. Usando valores padrões.');
+    end else
+      begin
+        if janela = 'True' then
+          begin
+            Form2.WindowState:=TWindowState.wsMaximized;
+          end else
+            begin
+              Form2.WindowState:=TWindowState.wsNormal;
+            end;
+      end;
 end;
 
 end.

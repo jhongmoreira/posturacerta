@@ -109,7 +109,9 @@ procedure TForm1.FormCreate(Sender: TObject);
   var minutos: string;
   var minutoSalvo: string;
   var popupconfig : string;
+  var erro : boolean;
 begin
+  erro := false;
   maxtime := strtotime('00:00:00');
   ArqINI := TIniFile.Create('./config.ini');
   minutoSalvo:= ArqINI.ReadString('Config','Time','90000');
@@ -117,15 +119,23 @@ begin
 
   if (StrToInt(minutoSalvo)>7200000) then
     begin
+      erro := True;
       minutoSalvo := IntToStr(1800000);
     end else
       begin
         if ((popupconfig<>'True') or (popupconfig<>'False')) then
           begin
+            erro := True;
             popupconfig := 'False';
           end;
       end;
 
+  if (erro = true) then
+    begin
+//      raise Exception.Create('Arquivo config.ini está corrompido. Assumindo valores padrões.');
+        ShowMessage('Arquvo de configurações está corrompido. Assumindo valores padrões.');
+    end else
+      begin
         if (popupconfig = 'True') then
           begin
             checkPop.Checked := True;
@@ -135,6 +145,11 @@ begin
             end;
           Edit1.Text := FloatToStr(StrToFloat(minutoSalvo)/60000);
           Timer2.Interval := StrToInt(minutoSalvo);
+      end;
+
+
+
+
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
