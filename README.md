@@ -40,7 +40,7 @@ Bem-vindo(a) ao **Postura Certa**, um software desenvolvido em **Delphi** com o 
 
 ## 🧑‍💻 Desenvolvido por
 
-**Jhonathan "Duramaky" Gleidsom Moreira **
+**Jhonathan Moreira **
 
 ---
 
